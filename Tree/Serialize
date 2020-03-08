@@ -1,0 +1,36 @@
+void serialize(Node *root,vector<int> &A)
+{
+    //Your code here
+    if(root==NULL)
+      return;
+    serialize(root->left,A);
+     A.push_back(root->data);
+    serialize(root->right,A);
+    return ;
+}
+
+/*this function deserializes
+ the serialized vector A*/
+ Node * helper(Node* root, vector<int> &A,int s,int e)
+ { 
+    
+     if(s>e)
+      return NULL;
+     int mid = (s+e)/2;
+     Node *temp = new Node(A[mid]);
+     temp->left =helper(temp->left,A,s,mid-1); 
+     temp->right=helper(temp->right,A,mid+1,e);
+     return temp;
+ } 
+Node * deSerialize(vector<int> &A)
+{
+   //Your code here
+     int mid = (0+A.size()-1)/2;
+     int s = 0;
+     int e = A.size()-1;
+     Node *temp = new Node(A[mid]);
+     temp->left =helper(temp->left,A,s,mid-1); 
+     temp->right=helper(temp->right,A,mid+1,e);
+    
+   return temp;
+}
